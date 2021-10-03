@@ -6,6 +6,75 @@
   height: 40vmin;
   pointer-events: none;
 }
+nav .container-fluid {
+position: relative;
+}
+nav .nav-link {
+padding: 0 1.5rem;
+}
+nav .container-fluid .avatar{
+position: absolute;
+right: 52px;
+border-radius: 50%;
+}
+nav .container-fluid .nav-item.dropdown{
+list-style-type:none;
+}
+nav .container-fluid .nav-item.dropdown a{
+color: black;
+}
+nav .buttongroup{
+  display: flex;
+  justify-content: space-between;
+  width: 130px;
+}
+.ReactModal__Content {
+  margin: 100px auto;
+  width: 500px;
+  height: 300px;
+  box-shadow: 1px 1px 2px grey;
+}
+
+.ReactModal__Content .loginBox{
+  margin-top:30px;
+}
+
+.ReactModal__Content .loginInput {
+  width: 200px;
+  margin-left: 20px;
+}
+.ReactModal__Content .loginLabel {
+  font-size: 1.1rem;
+  margin-top: 20px;
+}
+.ReactModal__Content p {
+position: absolute;
+top:60px;
+left: 50%;
+transform: translateX(-50%);
+}
+.ReactModal__Content .signupBox{
+  margin-top:40px;
+}
+.ReactModal__Content .signupInput {
+  width: 200px;
+  margin-left: 20px;
+}
+.ReactModal__Content .signupLabel {
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+.ReactModal__Content button{
+  margin:40px 40px 10px 40px;
+  padding:5px 15px;
+}
+.ReactModal__Content .signup-btn{
+  margin:30px 40px 0px 40px;
+  padding:5px 15px;
+}
+table .col-title {
+  text-align: end;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
