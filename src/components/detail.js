@@ -93,7 +93,7 @@ class Detail extends Component {
           <span className="lh-sm" style={{fontSize:'0.9rem'}}>{item.content}{"  "}</span> 
           {item.parentId===null && <span className="badge rounded-pill bg-secondary">{item.totalReplies} replies</span>}
           <p style={{fontSize:'small',fontStyle:'italic',textAlign:'end',margin:'0'}}>- - {item.user.name}</p>
-          {item.parentId===null && this.state.replyFlag!==item.id && <span className="badge bg-success mx-auto d-block m-1" style={{cursor:'pointer'}} onClick={()=>{this.setState({replyFlag:item.id})}}>Reply it</span>}
+          {item.parentId===null && this.state.replyFlag!==item.id && this.props.userId && <span className="badge bg-success mx-auto d-block m-1" style={{cursor:'pointer'}} onClick={()=>{this.setState({replyFlag:item.id})}}>Reply it</span>}
           {this.state.replyFlag===item.id &&<span>
             <textarea className="form-control mt-1" placeholder="Reply here" id="floatingTextarea" style={{height: '100px',width:'182px'}} ref={text=>{this.replyText=text}} required></textarea>
             <span className="d-flex justify-content-around mt-1">
