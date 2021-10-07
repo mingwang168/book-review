@@ -44,7 +44,7 @@ class UploadPhoto extends Component {
           )
       })
   }
-  submitBook=async() => {
+submitBook=async() => {
       let title=this.title.value.trim();
       let author=this.author.value.trim();
       let data={title,author}
@@ -73,7 +73,6 @@ try {
     }else{
         return
     }
-
 } catch (error) {
     console.log(error);
 }
@@ -98,26 +97,36 @@ if (this.file.files.length === 0) {
   });
 }
 }
-
+console.log(this.state.tags)
 //传tags
-if(this.state.tags!==[]){
-    this.state.tags.map(async(item,index)=>{
-        let data={name:item}
-    await fetch(BASE_URL +'books/'+this.state.bookId+'/tag',{
-        method: "POST",
-        headers: {
-          'Accept': "application/json",
-         'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.props.token}`,
-        },
-        body: JSON.stringify(data)
-    })        
-    })    
+if(this.state.tags.length!==0){
+   this.state.tags.map(async (item, index) => {
+    let data = { name: item };
+    await fetch(BASE_URL + 'books/' + this.state.bookId + '/tag', {
+      method: "POST",
+      headers: {
+        'Accept': "application/json",
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.token}`,
+      },
+      body: JSON.stringify(data)
+    }).then(_ => {
+      let { history } = this.props;
+      history.push({ pathname: '/' });
+      window.location.reload();
+    });
+  })
+}else{
+  let { history } = this.props
+  history.push({ pathname: '/' });
+  window.location.reload();
 }
+/* if(this.state.tags.length===0){
 let { history } = this.props
-history.push({ pathname: '/' });
-window.location.reload();
-  }
+  history.push({ pathname: '/' });
+  window.location.reload();
+} */
+}
   render() {
     return (
       <div>

@@ -55,15 +55,15 @@ class ChangeUser extends Component {
                 if(update.hasOwnProperty("name")){
                     sessionStorage.setItem("USER_NAME", newUsername);
                 }
-             return response.json()               
             }
-
+            return response.json()
         }).then(json=>{
            let  message=json.message;
            this.setState(()=>{return{
                 ajaxMessage:message,
                 passwordsConpareMessage:''
             }},()=>{
+                console.log(this.state.ajaxMessage)
                 if(json.affectedRows===1){
                    let { history } = this.props
                    history.push({ pathname: '/settings' });
@@ -72,7 +72,7 @@ class ChangeUser extends Component {
             })
         });    
         } catch (error) {
-            console.log(error.json())
+            console.log(error);
         }
     }
   render() {

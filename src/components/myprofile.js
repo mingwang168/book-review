@@ -18,17 +18,17 @@ class UserDetail extends Component {
         totalPages:0,
         initNumber:1,
         cursor:1,
-        loopEnding:PAGE_NUMBER,
+        loopEnding:1,
         userTotalLikes:0,
         likeTotalPages:0,
         likeInitNumber:1,
         likeCursor:1,
-        likeLoopEnding:PAGE_NUMBER,
+        likeLoopEnding:1,
         userTotalComments:0,
         commentTotalPages:0,
         commentInitNumber:1,
         commentCursor:1,
-        commentLoopEnding:PAGE_NUMBER
+        commentLoopEnding:1
     }
 user=this.props.location.state;
 componentDidMount=async () => {
@@ -295,7 +295,7 @@ nextPage=() => {
   this.setState(prevState=>{return({cursor:prevState.cursor+1})},()=>{
     this.getUserBooks("page="+this.state.cursor);
   });
-  if(this.state.cursor>=Math.ceil(PAGE_NUMBER/2) && this.state.cursor<this.state.totalPages-1){
+  if(this.state.cursor>=Math.ceil(PAGE_NUMBER/2) && this.state.cursor<this.state.totalPages-1 && this.state.loopEnding<this.state.totalPages){
     this.setState(prevState=>{return({initNumber:prevState.initNumber+1,loopEnding:prevState.loopEnding+1})});
   }
   }
@@ -328,7 +328,7 @@ likeNextPage=() => {
   this.setState(prevState=>{return({likeCursor:prevState.likeCursor+1})},()=>{
     this.getUserLikes("page="+this.state.likeCursor);
   });
-  if(this.state.likeCursor>=Math.ceil(PAGE_NUMBER/2) && this.state.likeCursor<this.state.likeTotalPages-1){
+  if(this.state.likeCursor>=Math.ceil(PAGE_NUMBER/2) && this.state.likeCursor<this.state.likeTotalPages-1 && this.state.likeLoopEnding<this.state.likeTotalPages){
     this.setState(prevState=>{return({likeInitNumber:prevState.likeInitNumber+1,likeLoopEnding:prevState.likeLoopEnding+1})});
   }
   }
@@ -361,7 +361,7 @@ commentNextPage=() => {
   this.setState(prevState=>{return({commentCursor:prevState.commentCursor+1})},()=>{
     this.getUserComments("page="+this.state.commentCursor);
   });
-  if(this.state.commentCursor>=Math.ceil(PAGE_NUMBER/2) && this.state.commentCursor<this.state.commentTotalPages-1){
+  if(this.state.commentCursor>=Math.ceil(PAGE_NUMBER/2) && this.state.commentCursor<this.state.commentTotalPages-1 && this.state.commentLoopEnding<this.state.commentTotalPages){
     this.setState(prevState=>{return({commentInitNumber:prevState.commentInitNumber+1,commentLoopEnding:prevState.commentLoopEnding+1})});
   }
   }

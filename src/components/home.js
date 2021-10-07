@@ -9,7 +9,7 @@ class Home extends Component {
     totalPages:0,
     initNumber:1,
     cursor:1,
-    loopEnding:PAGE_NUMBER,
+    loopEnding:1,
     sort:'',
     tagInput:'',
   }
@@ -54,7 +54,7 @@ componentDidMount=async()=> {
     this.setState(prevState=>{return({cursor:prevState.cursor+1})},async()=>{
       await this.props.getBooks("sort="+this.state.sort,"&tag="+this.state.tagInput,"&page="+this.state.cursor);
     });
-    if(this.state.cursor>=Math.ceil(PAGE_NUMBER/2) && this.state.cursor<this.state.totalPages-1){
+    if(this.state.cursor>=Math.ceil(PAGE_NUMBER/2) && this.state.cursor<this.state.totalPages-1 && this.state.loopEnding<this.state.totalPages){
       this.setState(prevState=>{return({initNumber:prevState.initNumber+1,loopEnding:prevState.loopEnding+1})});
     }
     }

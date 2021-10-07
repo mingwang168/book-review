@@ -164,6 +164,7 @@ getComments = async () => {
       .then(response=>{
         if(response.status===201){
           this.text.value='';
+          this.setState({commentLeft:COMMENT_LIMITATION})
           this.getComments();
         }
       })
@@ -235,7 +236,7 @@ showInputTags=() => {
       )
   })
 }
-submitTags=() => {
+submitTags=async() => {
   if(this.tags!==null){
     try {
     this.tags.map(async(item,index)=>{
@@ -248,15 +249,15 @@ submitTags=() => {
           Authorization: `Bearer ${this.props.token}`,
         },
         body: JSON.stringify(data)
-    })        
+    }).then(_=>{
+      window.location.reload();
+    })
     })
     } catch (error) {
       console.log(error)
     }
 }
-//window.history.back(-1)
-//this.fetchTags()
-window.location.reload()
+
 }
 
 showTags=() => {

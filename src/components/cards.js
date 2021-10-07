@@ -42,7 +42,7 @@ if(books){
           }} style={{textDecoration:"none",color:"black"}}>
           <div className="card-footer">
             <small className="text-muted">
-              Uploaded by : {item.user.name}
+            U/L : {item.user.name}
             </small>
           </div></Link>
         </div>

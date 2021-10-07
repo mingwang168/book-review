@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { BASE_URL,COMMENT_LIMITATION } from "../config";
 
@@ -88,8 +89,8 @@ class Detail extends Component {
     return this.state.comments.map((item, index) => {
       return (
         <button type="button" className="btn btn-outline-secondary text-start m-1 p-2" style={{cursor:'default',maxWidth:'200px'}} key={item.id}>
-          {item.parentId!==null?<p className="badge bg-primary d-block m-0">Reply</p>:<p className="badge bg-dark d-block m-0">Comment</p>}
-          {item.content}{"  "}
+          {item.parentId!==null?<p className="badge bg-primary d-block m-0">Reply</p>:<p className="badge bg-dark d-block m-0 lh-sm">Comment</p>}
+          <span className="lh-sm" style={{fontSize:'0.9rem'}}>{item.content}{"  "}</span> 
           {item.parentId===null && <span className="badge rounded-pill bg-secondary">{item.totalReplies} replies</span>}
           <p style={{fontSize:'small',fontStyle:'italic',textAlign:'end',margin:'0'}}>- - {item.user.name}</p>
           {item.parentId===null && this.state.replyFlag!==item.id && <span className="badge bg-success mx-auto d-block m-1" style={{cursor:'pointer'}} onClick={()=>{this.setState({replyFlag:item.id})}}>Reply it</span>}
@@ -171,6 +172,7 @@ class Detail extends Component {
       .then(response=>{
         if(response.status===201){
           this.text.value='';
+          this.setState({commentLeft:COMMENT_LIMITATION})
           this.getComments();
         }
       })
@@ -225,6 +227,7 @@ class Detail extends Component {
               }
             )
           })
+          this.setLikes();
         }
       })
     } catch (error) {
@@ -251,6 +254,7 @@ class Detail extends Component {
               }
             )
           })
+          this.setLikes();
         }
       })
     } catch (error) {
@@ -286,17 +290,17 @@ class Detail extends Component {
                 style={{ height: "450px", objectFit: "cover" }}
               />
             </div>
-            <div className="col-md-9 col-sm-12 col-12 d-flex" style={{height:'452px',scrollBehavior:'smooth',overflow:'auto'}}>
+            <div className="col-md-9 col-sm-12 col-12 d-flex" style={{height:'500px',scrollBehavior:'smooth',overflow:'auto'}}>
               <div className="card-body ">
-              {this.state.userLike?
+              {this.state.userLike && this.props.userId &&
                    <span className="d-flex justify-content-between p-0 m-0 align-items-start">
                      <span>
                        <span className="card-title fs-4 text-danger">{this.state.book.title}</span>
                        <img src={like} alt="like" style={{width:'30px',height:'30px',cursor:'pointer',marginLeft:'10px'}}/>                       
                      </span>
                    <p className="btn btn-sm btn-secondary me-3 align-self-start" onClick={this.cancelLike} style={{width:'120px'}}>Cancel Like</p>
-                   </span>:
-                   <span className="d-flex justify-content-between p-0 m-0 align-items-start">
+                   </span>}
+                   {!this.state.userLike && this.props.userId && <span className="d-flex justify-content-between p-0 m-0 align-items-start">
                    <span className="card-title fs-4">{this.state.book.title}</span>
                    <p className="btn btn-sm btn-danger me-3 align-self-start" onClick={this.like} style={{width:'90px'}}>Like</p>
                    </span>
@@ -304,8 +308,14 @@ class Detail extends Component {
                 <p className="card-text fst-italic mt-2">
                   By : {this.state.book.author}
                 </p>
+                
                 <p className="card-text fst-italic mt-2">
-                  Uploaded By : {this.state.book.user.name}
+                  Uploaded By : 
+                <Link to={{
+                            pathname:'/userdetail',
+                            state:this.state.book.user
+                          }}> 
+                  <span>{this.state.book.user.name}</span></Link>
                 </p>
                 <p className="card-text">
                   <i className="fa fa-tags" aria-hidden="true"></i> :{" "}
@@ -338,12 +348,12 @@ class Detail extends Component {
                   {this.showLikes()}
                 </div>
               </div>
-              <div className="form-floating m-3" style={{width:'200px'}}>
+              {this.props.userId&&<div className="form-floating m-3" style={{width:'200px'}}>
                  <textarea className="form-control  required" placeholder="Leave a comment here" id="floatingTextarea" style={{height: '300px',width:'200px'}} ref={text=>{this.text=text}}  required onKeyUp={this.countWord}></textarea>
                  <label htmlFor="floatingTextarea">Add New Comment :</label>
                  <span>You are {this.state.commentLeft} characters left.</span>
                  <button className="float-end btn btn-primary btn-sm m-2" onClick={this.submitNewComment}>Add</button>
-              </div>
+              </div>}
             </div>
           </div>
         </div>
